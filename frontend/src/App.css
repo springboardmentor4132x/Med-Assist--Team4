@@ -1,0 +1,223 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f4ff, #f3f7fc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 35px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.registration-card {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  padding: 35px 40px;
+  border-radius: 18px;
+  box-shadow: 0 10px 35px rgba(25, 70, 110, 0.12);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  background: #087e8b;
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+
+.brand h1 {
+  color: #173b57;
+  font-size: 27px;
+}
+
+.brand h1 span {
+  color: #087e8b;
+}
+
+.form-heading {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.form-heading h2 {
+  color: #173b57;
+  font-size: 24px;
+  margin-bottom: 9px;
+}
+
+.form-heading p {
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 19px;
+  flex: 1;
+}
+
+.input-group label {
+  color: #34495e;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.input-group label span {
+  color: #8995a3;
+  font-weight: 400;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #d6e0e9;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+  background: #fff;
+  color: #263b50;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: #087e8b;
+  box-shadow: 0 0 0 3px rgba(8, 126, 139, 0.1);
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.register-button {
+  width: 100%;
+  padding: 14px;
+  background: #087e8b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+ transition: background 0.2s;
+}
+
+.register-button:hover {
+  background: #06636e;
+}
+
+.error-message {
+  color: #c0392b;
+  background: #fff0ee;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.success-message {
+  color: #18794e;
+  background: #e9f8ef;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.login-text {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 14px;
+  color: #718096;
+}
+
+.login-text span {
+  color: #087e8b;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.footer-text {
+  text-align: center;
+  color: #9aa7b4;
+  font-size: 11px;
+  margin-top: 25px;
+}
+
+@media (max-width: 500px) {
+  .registration-card {
+    padding: 28px 20px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+/* OR Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: #888;
+  font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #ddd;
+}
+
+/* Google Sign-In Button */
+.google-button {
+  width: 100%;
+  padding: 12px;
+  background-color: white;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #3c4043;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.google-button:hover {
+  background-color: #f7f8f8;
+}
+.google-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
