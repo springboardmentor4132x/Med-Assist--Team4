@@ -1,44 +1,60 @@
-# MedAssist AI: Medical History Tracking module
+# MedAssist AI — Team 4
 
-Next.js 14 (App Router, TypeScript, Tailwind) + FastAPI + SQLAlchemy. SQLite for local dev, PostgreSQL via DATABASE_URL.
+An intelligent healthcare platform supporting patient profiles, clinical medical history tracking, role-based access control, and symptom analysis.
 
-## Run it in VS Code (two terminals)
-Requires Python 3.10+ and Node 18+.
+---
 
-Terminal 1, API (http://127.0.0.1:8000, docs at /docs):
+## 🏗️ Project Architecture
 
-    cd backend
-    python -m venv .venv
-    .venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
-    pip install -r requirements.txt
-    uvicorn app.main:app --reload
+All source code is maintained inside the [`medassist-ai/`](./medassist-ai/) directory:
 
-Terminal 2, web (http://localhost:3000):
+* **Backend (`medassist-ai/backend/`)**: FastAPI, SQLAlchemy 2.0, PostgreSQL, PyJWT, Bcrypt.
+* **Frontend (`medassist-ai/frontend/`)**: React 18, Vite, React Router v6, Axios.
+* **Database (`medassist-ai/docker-compose.yml`)**: PostgreSQL 16.
 
-    cd frontend
-    npm install
-    npm run dev
+---
 
-Open http://localhost:3000. Sample records for patient Priya Nair are seeded on first start.
-Use the "Viewing as" dropdown (top bar): Patient, Doctor, or Admin.
+## 🚀 Modules Implemented
 
-## Try the approval flow
-1. Viewing as Doctor: "Patient approval required" -> click Request patient approval.
-2. Switch to Patient: the "Doctor access" panel shows the request. Untick types to limit it, then Approve.
-3. Switch to Doctor: only approved types show; add/edit works; delete works only on records the doctor added.
-4. Patient: Revoke access -> the doctor is blocked again.
+### Module 1: User Management & Authentication
+* **Multi-Role RBAC**: Patient, Doctor, Clinic, Administrator.
+* **Authentication**: Bcrypt password hashing, JWT tokens with server-side revocation on logout.
+* **Patient Profiles**: Personal details, contact, emergency info, and blood group.
+* **Medical Records**: Conditions, allergies, medications, and surgeries.
+* **Access Delegation**: Patient-controlled consent allowing doctors/clinics to review records.
+* **Admin Dashboard**: User management, role elevation, and system metrics.
 
-## Rules (enforced by the API, not just the UI)
-- Patient: add, edit, delete own records. Doctor: only with a patient-approved request, only approved record types;
-  adds/edits, deletes only own. Admin: read-only. Records show "Added by doctor".
-- GET /api/patients/{id}/medical-history/context feeds Symptom Analysis (respects the same approval scope).
+### Module 2: Symptom Analysis (In Progress)
+* **Medical History Integration**: Extracts chronic conditions, active allergies, ongoing medications, and evaluates respiratory, cardiovascular, and diabetic risk indicators to provide clinical context for symptom assessments.
+* **Context API**: `GET /api/history/context` for patient evaluation and authorized doctor reviews.
+* **UI Clinical Widget**: `MedicalContextCard.jsx` embedded in the symptom assessment workflow.
 
-## Replace for production (team integration)
-- backend/app/auth.py is a DEV stand-in (dev-login endpoint). Swap in the real JWT/RBAC module; medical_history only needs
-  get_current_user() -> object with .id, .role ("patient" | "doctor" | "admin"), .name.
-- frontend/lib/auth.tsx is the matching dev stand-in; the API client reads the token from localStorage("token").
-- backend/app/db.py: set DATABASE_URL=postgresql+psycopg://... and add Alembic migrations
-  (tables: medical_history, medical_history_access). Tables are auto-created for dev only.
-- AppShell (sidebar/top bar) is a placeholder; delete it if the main app already has navigation.
-- Doctors/admins open /medical-history?patient=<id> (defaults to 1).
-- Tailwind is installed (preflight off) so the design-system stylesheet in app/globals.css renders exactly as designed.
+---
+
+## 💻 Quick Start
+
+### 1. Start the Database
+```bash
+cd medassist-ai
+docker compose up -d
+```
+
+### 2. Start the Backend API
+```bash
+cd medassist-ai/backend
+python -m venv venv
+# Windows: venv\Scripts\activate | Mac/Linux: source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+uvicorn app.main:app --reload
+```
+* Interactive API Documentation: http://localhost:8000/docs
+* Default Admin: `admin@medassist.com` / `Admin@12345`
+
+### 3. Start the Frontend Application
+```bash
+cd medassist-ai/frontend
+npm install
+npm run dev
+```
+* Web App: http://localhost:5173
