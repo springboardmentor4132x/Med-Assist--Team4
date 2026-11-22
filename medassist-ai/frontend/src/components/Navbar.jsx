@@ -17,6 +17,7 @@ export default function Navbar() {
         <>
           <Link to="/">Dashboard</Link>
           <Link to="/profile">Profile</Link>
+          <Link to="/symptoms">Symptoms</Link>
           {user.role === "patient" && <Link to="/history">Medical History</Link>}
           {user.role === "patient" && <Link to="/sharing">Sharing</Link>}
           {(user.role === "doctor" || user.role === "clinic") && <Link to="/patients">My Patients</Link>}

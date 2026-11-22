@@ -10,6 +10,7 @@ import Sharing from "./pages/Sharing";
 import Patients from "./pages/Patients";
 import PatientDetail from "./pages/PatientDetail";
 import AdminUsers from "./pages/AdminUsers";
+import SymptomAnalysis from "./pages/SymptomAnalysis";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/symptoms" element={<ProtectedRoute><SymptomAnalysis /></ProtectedRoute>} />
         <Route path="/history" element={<ProtectedRoute roles={["patient"]}><MedicalHistory /></ProtectedRoute>} />
         <Route path="/sharing" element={<ProtectedRoute roles={["patient"]}><Sharing /></ProtectedRoute>} />
         <Route path="/patients" element={<ProtectedRoute roles={["doctor", "clinic"]}><Patients /></ProtectedRoute>} />

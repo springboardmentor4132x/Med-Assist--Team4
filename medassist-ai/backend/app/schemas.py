@@ -3,6 +3,7 @@ from datetime import date, datetime
 from typing import Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
+from .symptom_catalog import SYMPTOM_SET
 
 Gender = Literal["male", "female", "other"]
 RegisterRole = Literal["patient", "doctor", "clinic"]
@@ -133,3 +134,46 @@ class StatusUpdate(BaseModel):
 
 class Message(BaseModel):
     message: str
+
+
+class SymptomSubmit(BaseModel):
+    symptoms: list[str] = Field(max_length=50)
+
+    @field_validator("symptoms")
+    @classmethod
+    def check_symptoms(cls, v: list[str]) -> list[str]:
+        if len(v) == 0:
+            raise ValueError("Please select at least one symptom.")
+        cleaned = []
+        for s in v:
+            name = s.strip().lower().replace(" ", "_")
+            if not name:
+                raise ValueError("Symptom names cannot be blank.")
+            cleaned.append(name)
+        unknown = sorted({s for s in cleaned if s not in SYMPTOM_SET})
+        if unknown:
+            raise ValueError("Unsupported symptom(s): " + ", ".join(unknown))
+        return cleaned
+
+
+class SymptomAssessmentOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    user_id: int
+    selected_symptoms: list[str]
+    validation_status: str
+    created_at: datetime
+
+
+class SymptomSubmitResult(BaseModel):
+    assessment: SymptomAssessmentOut
+    duplicates_removed: int
+    message: str
+
+
+class SymptomOption(BaseModel):
+    name: str
+    label: str
+
+

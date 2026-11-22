@@ -9,7 +9,7 @@ from . import models  # noqa: F401  (registers tables)
 from .config import ADMIN_EMAIL, ADMIN_NAME, ADMIN_PASSWORD, CORS_ORIGINS
 from .database import Base, SessionLocal, engine
 from .models import User
-from .routers import access, admin, auth, history, users
+from .routers import access, admin, auth, history, symptoms, users
 from .security import hash_password
 
 log = logging.getLogger("medassist")
@@ -45,7 +45,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-for r in (auth.router, users.router, history.router, access.router, admin.router):
+for r in (auth.router, users.router, history.router, access.router, admin.router, symptoms.router):
     app.include_router(r)
 
 

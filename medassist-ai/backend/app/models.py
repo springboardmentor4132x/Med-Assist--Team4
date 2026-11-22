@@ -1,7 +1,7 @@
 from datetime import date, datetime, timezone
 from typing import Optional
 
-from sqlalchemy import Boolean, Date, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
+from sqlalchemy import JSON, Boolean, Date, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .database import Base
@@ -60,3 +60,14 @@ class RevokedToken(Base):
 
     jti: Mapped[str] = mapped_column(String(64), primary_key=True)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+class SymptomAssessment(Base):
+    """Symptoms a user submitted (Module 2: selection and validation)."""
+
+    __tablename__ = "symptom_assessments"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    selected_symptoms: Mapped[list] = mapped_column(JSON)
+    validation_status: Mapped[str] = mapped_column(String(20), default="valid")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
