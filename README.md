@@ -1,60 +1,61 @@
-# MedAssist AI — Team 4
+# MedAssist AI (Team 4)
 
-An intelligent healthcare platform supporting patient profiles, clinical medical history tracking, role-based access control, and symptom analysis.
+MedAssist AI is a web-based clinical assistant system designed to help users track their medical history, record symptoms, and prepare structured health information for preliminary insights and disease prediction.
 
----
+## Overview and Structure
 
-## 🏗️ Project Architecture
+The main codebase is located in the `medassist-ai` directory:
 
-All source code is maintained inside the [`medassist-ai/`](./medassist-ai/) directory:
+- `backend/`: REST API built with FastAPI, SQLAlchemy 2.0, and PostgreSQL. Handles authentication, profile management, medical records, and symptom analysis context.
+- `frontend/`: Client application built with React (Vite) and React Router. Provides interfaces for patients, doctors, and administrators.
+- `docker-compose.yml`: Local PostgreSQL database configuration.
 
-* **Backend (`medassist-ai/backend/`)**: FastAPI, SQLAlchemy 2.0, PostgreSQL, PyJWT, Bcrypt.
-* **Frontend (`medassist-ai/frontend/`)**: React 18, Vite, React Router v6, Axios.
-* **Database (`medassist-ai/docker-compose.yml`)**: PostgreSQL 16.
+## Current Progress
 
----
+### Module 1: User Management and Authentication
+- User registration and login with bcrypt password hashing and JWT authentication.
+- Role-based access control with distinct permissions for Patient, Doctor, Clinic, and Admin roles.
+- Patient profile management (age, gender, contact details, blood group).
+- Clinical history tracking (conditions, allergies, ongoing medications, surgeries).
+- Access sharing mechanism allowing patients to grant or revoke medical record view permissions to specific doctors or clinics.
+- Admin dashboard to manage user accounts and view system statistics.
 
-## 🚀 Modules Implemented
+### Module 2: Symptom Analysis (Medical History Integration)
+- Medical history integration service that extracts chronic conditions, active allergies, medications, and identifies key risk factors (respiratory, cardiovascular, diabetic).
+- Dedicated context endpoints (`GET /api/history/context`) to supply structured clinical context to the symptom analysis pipeline.
+- Front-end clinical context card component to preview relevant health background before running an assessment.
 
-### Module 1: User Management & Authentication
-* **Multi-Role RBAC**: Patient, Doctor, Clinic, Administrator.
-* **Authentication**: Bcrypt password hashing, JWT tokens with server-side revocation on logout.
-* **Patient Profiles**: Personal details, contact, emergency info, and blood group.
-* **Medical Records**: Conditions, allergies, medications, and surgeries.
-* **Access Delegation**: Patient-controlled consent allowing doctors/clinics to review records.
-* **Admin Dashboard**: User management, role elevation, and system metrics.
+## Running the Application Locally
 
-### Module 2: Symptom Analysis (In Progress)
-* **Medical History Integration**: Extracts chronic conditions, active allergies, ongoing medications, and evaluates respiratory, cardiovascular, and diabetic risk indicators to provide clinical context for symptom assessments.
-* **Context API**: `GET /api/history/context` for patient evaluation and authorized doctor reviews.
-* **UI Clinical Widget**: `MedicalContextCard.jsx` embedded in the symptom assessment workflow.
-
----
-
-## 💻 Quick Start
-
-### 1. Start the Database
+### 1. Database Setup
+Start the local PostgreSQL container:
 ```bash
 cd medassist-ai
 docker compose up -d
 ```
 
-### 2. Start the Backend API
+### 2. Backend Setup
+Run the FastAPI development server:
 ```bash
 cd medassist-ai/backend
 python -m venv venv
-# Windows: venv\Scripts\activate | Mac/Linux: source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
 pip install -r requirements.txt
 cp .env.example .env
 uvicorn app.main:app --reload
 ```
-* Interactive API Documentation: http://localhost:8000/docs
-* Default Admin: `admin@medassist.com` / `Admin@12345`
+The API documentation will be available at http://localhost:8000/docs.
 
-### 3. Start the Frontend Application
+### 3. Frontend Setup
+In a separate terminal, start the Vite development server:
 ```bash
 cd medassist-ai/frontend
 npm install
 npm run dev
 ```
-* Web App: http://localhost:5173
+The application will run at http://localhost:5173.
