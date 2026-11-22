@@ -5,6 +5,7 @@ const CARDS = {
   patient: [
     ["/profile", "My Profile", "View and update your personal details"],
     ["/history", "Medical History", "Record conditions, allergies, medications"],
+    ["/symptom-analysis", "Symptom Analysis", "Review clinical background and check symptoms"],
     ["/sharing", "Share Records", "Choose which doctors/clinics can see your history"],
   ],
   doctor: [
